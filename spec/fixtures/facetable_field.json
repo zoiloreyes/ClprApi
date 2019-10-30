@@ -1,0 +1,18 @@
+{
+  "field_id": "boat_make",
+  "value": "option",
+  "label": "Marca",
+  "is_facetable": true,
+  "options": [],
+  "config_ids": [221, 225, 230, 454, 458, 463, 702, 706, 711, 747],
+  "category_ids": [1435, 1309, 1308, 1310, 1311, 1, 1461],
+  "category_slugs": [
+    "vehiculos-botes-y-acuaticos-otros",
+    "vehiculos-botes-y-acuaticos-botes-de-motor",
+    "vehiculos-botes-y-acuaticos",
+    "vehiculos-botes-y-acuaticos-veleros",
+    "vehiculos-botes-y-acuaticos-jet-ski",
+    "todos",
+    "empleos"
+  ]
+}
