@@ -1,15 +1,18 @@
 module ClprApi
   module Listings
     class GetListingsByBusiness < Listings::GetListings
-      attr_reader :business_slug, :params
+      attr_reader :business_slug, :params, :listing_serializer_klass
 
-      def initialize(business_slug:, params: {}, search_conditions: [])
+      def initialize(business_slug:, params: {}, config: {}, search_conditions: [])
         @business_slug = business_slug
-        super(params: prepare_params(params), search_conditions: search_conditions)
+        @listing_serializer_klass = config.fetch(:listing_serializer_klass) { ClprApi.listing_serializer_klass }
+        @search_conditions = search_conditions
+
+        super(params: prepare_params(params), config: config, search_conditions: search_conditions)
       end
 
-      def self.call(business_slug:, params: {})
-        new(business_slug: business_slug, params: params)
+      def self.call(business_slug:, params: {}, config: {}, search_conditions: [])
+        new(business_slug: business_slug, params: params, config: config, search_conditions: search_conditions)
       end
 
       def as_json(*)
@@ -21,7 +24,7 @@ module ClprApi
       end
 
       def business_filter
-        "business_slug_s:(#{business.slug})"
+        "business_slug_s:(#{business_slug})"
       end
 
       def business
@@ -29,10 +32,14 @@ module ClprApi
       end
 
       def business_record
-        @business_record ||= Business.find_by!(slug: business_slug)
+        listing_from_business.business
       end
 
       private
+
+      def listing_from_business
+        @listing_from_business ||= ClprApi::Listings::GetListings.new(search_conditions: [business_filter], params: { limit: 1 }).items.last
+      end
 
       def category_param_from_business_industry
         { category: business_record.industry.slug, filters_category_param: business_record.industry.category_slug }
@@ -41,11 +48,9 @@ module ClprApi
       def prepare_params(_params)
         params = _params.dup
 
-        if business_record.industry
-          params.permit!.reverse_merge(category_param_from_business_industry) if business_record.industry
-        else
-          params.permit!
-        end
+        return params.reverse_merge(category_param_from_business_industry) if business_record.industry
+
+        params
       end
     end
   end

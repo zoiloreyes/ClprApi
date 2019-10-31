@@ -2,26 +2,25 @@ module ClprApi
   module Serializers
     class BusinessFromSerializedListing
       alias_method :read_attribute_for_serialization, :send
-      attr_reader :id, :name, :license, :phone, :phone_ext, :phone2, :phone2_ext, :address1, :address2, :city, :state, :country, :postal_code, :url, :logo, :slug
+      attr_reader :id, :name, :license, :phone, :phone_ext, :phone2, :phone2_ext, :address1, :address2, :city, :state, :country, :postal_code, :url, :logo_path, :slug, :business_industry_id
+      attr_reader :attrs
 
       def initialize(attrs)
+        @attrs = attrs
         @id = attrs["business_id"]
-        @name = attrs["business_name"]
-        @phone = attrs["business_phone"]
-        @address1 = attrs["business_address1"]
-        @city = attrs["business_city"]
-        @state = attrs["business_country"]
         @url = attrs["business_url"]
-        @logo = attrs["business_logo"].to_s
+        @name = attrs["business_name"]
         @slug = attrs["business_slug"]
+        @city = attrs["business_city"]
+        @phone = attrs["business_phone"]
+        @state = attrs["business_country"]
+        @address1 = attrs["business_address1"]
+        @logo_path = attrs["business_logo_path"].to_s
+        @business_industry_id = attrs["business_industry_id"]
       end
 
-      def s3_logo
-        logo if logo.start_with?("logo")
-      end
-
-      def logo_path
-        logo
+      def industry
+        @industry ||= BusinessIndustryFromSerializedListing.new(attrs)
       end
     end
   end
