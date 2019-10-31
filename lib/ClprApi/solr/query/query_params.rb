@@ -19,7 +19,7 @@ module ClprApi
         end
 
         def _filters_category_param
-          @_filters_category_param ||= params[:category].is_a?(Enumerable) ? params[:category] : params[:category].to_s.split(",")
+          @_filters_category_param ||= params[:filters_category_param].is_a?(Enumerable) ? params[:filters_category_param] : params[:filters_category_param].to_s.split(",")
         end
 
         def filters_category_param
