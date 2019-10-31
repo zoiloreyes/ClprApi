@@ -152,7 +152,7 @@ module ClprApi
       end
 
       def prepare_params(_params = {})
-        params = _params.dup.with_indifferent_access
+        params = _params.dup.to_h.with_indifferent_access
         _filters = params.delete(:filters) || {}
 
         params.merge(_filters).with_indifferent_access
