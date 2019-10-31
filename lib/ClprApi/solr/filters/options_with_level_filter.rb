@@ -13,7 +13,7 @@ module ClprApi
         delegate :selected_parents, :selected_records, to: :options
 
         def fetch(*args)
-          properties.fetch(args.first) rescue ::Kernel.binding.pry
+          properties.fetch(args.first)
         end
 
         def selected_slugs
