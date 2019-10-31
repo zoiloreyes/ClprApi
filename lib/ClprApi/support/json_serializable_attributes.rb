@@ -6,12 +6,18 @@ module ClprApi
           @serializable_attributes = (@serializable_attributes || [])
         end
 
+        def serializable_attributes_procs
+          @serializable_attributes_procs = (@serializable_attributes_procs || {})
+        end
+
         def attributes(*args)
           args.each { |arg| attribute(arg) }
         end
 
-        def attribute(arg)
+        def attribute(arg, &block)
           serializable_attributes << arg
+
+          serializable_attributes_procs[arg] = block if block_given?
         end
       end
 
@@ -21,7 +27,13 @@ module ClprApi
 
       def as_json(*)
         self.class.serializable_attributes.reduce({}) do |hash, attribute|
-          hash.merge(attribute => public_send(attribute))
+          value = if self.class.serializable_attributes_procs[attribute]
+                    self.class.serializable_attributes_procs[attribute].call(self)
+                  else
+                    public_send(attribute)
+                  end
+
+          hash.merge(attribute => value)
         end
       end
     end
