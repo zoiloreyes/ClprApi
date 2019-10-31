@@ -23,7 +23,7 @@ module ClprApi
         attrs["highlighted"] = highlighted_until.present? && Time.parse(highlighted_until) > Time.now
 
         if attrs["business_name"].present?
-          attrs["business"] = Serializers::BusinessSerializer.new(Serializers::BusinessFromSerializedListing.new(attrs)).as_json(root: nil)
+          attrs["business"] = Serializers::BusinessSerializer.new(Serializers::BusinessFromSerializedListing.new(attrs), root: nil)
         end
 
         if youtube_id.present?
