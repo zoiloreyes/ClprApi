@@ -10,14 +10,19 @@ module ClprApi
           @serializable_attributes_procs = (@serializable_attributes_procs || {})
         end
 
+        def serializable_attributes_aliases
+          @serializable_attributes_aliases = (@serializable_attributes_aliases || {})
+        end
+
         def attributes(*args)
           args.each { |arg| attribute(arg) }
         end
 
-        def attribute(arg, &block)
+        def attribute(arg, alias_name = nil, &block)
           serializable_attributes << arg
 
           serializable_attributes_procs[arg] = block if block_given?
+          serializable_attributes_aliases[arg] = alias_name if alias_name
         end
       end
 
@@ -33,7 +38,7 @@ module ClprApi
                     public_send(attribute)
                   end
 
-          hash.merge(attribute => value)
+          hash.merge(self.class.serializable_attributes_aliases.fetch(attribute, attribute) => value)
         end
       end
     end
