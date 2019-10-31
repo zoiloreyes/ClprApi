@@ -73,7 +73,8 @@ RSpec.describe ClprApi::Listings::GetListings do
     expect(serialized_listing.price_conditions).to eq("")
     expect(serialized_listing.price_obo).to be_falsey
     expect(serialized_listing.area_type).to eq("country")
-    expect(serialized_listing.extra_fields).to match_array(["car_doors", "car_make", "car_model", "car_vin", "car_year", "new_or_used"])
+    expect(serialized_listing.extra_fields.map(&:id)).to match_array(["car_doors", "car_make", "car_model", "car_vin", "car_year", "new_or_used"])
+    expect(serialized_listing.extra_fields.map(&:value)).to match_array(["3N1CN7APXFL934684", "Versa", 2015, 4, "Nuevo", "Nissan"])
     expect(serialized_listing.id).to eq("1200601s")
     expect(serialized_listing.highlighted).to be_falsey
 
@@ -81,5 +82,7 @@ RSpec.describe ClprApi::Listings::GetListings do
     expect(listing_image_serialized.medium.url).to be_end_with("/320x240/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
     expect(listing_image_serialized.large.url).to be_end_with("/640x480/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
     expect(listing_image_serialized.full.url).to be_end_with("/1024x768/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
+
+    expect(serialized_listing.as_json.keys).to eq([:id, :title, :listing_id, :category_slug, :area_slug, :primary_fields])
   end
 end

@@ -13,8 +13,12 @@ require "ClprApi/solr/field_support"
 require "ClprApi/support/thumbor_image"
 
 require "ClprApi/support/youtube/url_or_hash_validation"
+require "ClprApi/support/json_serializable_attributes"
+require "ClprApi/support/attributes_from_hash_with_string_keys_initializer"
 require "ClprApi/support/youtube/url_or_hash_values"
 require "ClprApi/support/youtube/url"
+require "ClprApi/support/extra_field_metadata"
+require "ClprApi/support/extra_field"
 
 require "ClprApi/serializers/solr_business_industry_serializer"
 require "ClprApi/serializers/business_photo_serializer"

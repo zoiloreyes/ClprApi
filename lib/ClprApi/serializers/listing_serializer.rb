@@ -1,10 +1,14 @@
 module ClprApi
   module Serializers
     class ListingSerializer < OpenStruct
+      include ClprApi::Support::JsonAttributesSerializer
+
       S3_SOURCE_PATH = ENV.fetch("S3_SOURCE_PATH")
       IGNORED_FIELDS = ["photos_url_large", "photos_url_tiny", "photos_url_medium", "photos_url_small", "photos_id", "photos_url", "photos_url_src", "photos_description"].freeze
 
       delegate :[], :fetch, to: :attrs
+
+      attributes :id, :title, :listing_id, :category_slug, :area_slug, :primary_fields
 
       alias_method :read_attribute_for_serialization, :send
       attr_reader :attrs, :solr_field_names
@@ -34,13 +38,16 @@ module ClprApi
         attrs
       end
 
-      def as_json(*)
-        attrs.as_json(except: IGNORED_FIELDS).merge(extra_fields_metadata: extra_fields_metadata).merge(images: images.map(&:as_json))
+      def extra_fields
+        @extra_fields ||= attrs.fetch("extra_fields_metadata", []).map { |field|
+          json_field = JSON.parse(field)
+          Support::ExtraField.new(json_field.merge("value" => attrs[json_field["id"]]))
+        }
       end
 
       def extra_fields_metadata
         @extra_fields_metadata ||= attrs.fetch("extra_fields_metadata", []).map { |field|
-          JSON.parse(field)
+          Support::ExtraFieldMetadata.new(JSON.parse(field))
         }
       end
 
