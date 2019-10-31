@@ -14,20 +14,20 @@ module ClprApi
           params[:order]
         end
 
+        def source_param
+          @source_param ||= splitable_or_enumerable_from(:source)
+        end
+
         def category_param
-          @category_param ||= params[:category].is_a?(Enumerable) ? params[:category] : params[:category].to_s.split(",")
+          @category_param ||= splitable_or_enumerable_from(:category)
         end
 
         def _filters_category_param
-          @_filters_category_param ||= params[:filters_category_param].is_a?(Enumerable) ? params[:filters_category_param] : params[:filters_category_param].to_s.split(",")
+          @_filters_category_param ||= splitable_or_enumerable_from(:filters_category_param)
         end
 
         def filters_category_param
           _filters_category_param.present? ? _filters_category_param : category_param
-        end
-
-        def source_param
-          @source_param ||= params[:source].is_a?(Enumerable) ? params[:source] : params[:source].to_s.split(",")
         end
 
         def search_filter
@@ -98,6 +98,12 @@ module ClprApi
 
         def highlighted?
           [true, "true"].include?(params.fetch(:highlighted, false))
+        end
+
+        private
+
+        def splitable_or_enumerable_from(key)
+          params[key].is_a?(Enumerable) ? params[key] : params[key].to_s.split(",")
         end
       end
     end
