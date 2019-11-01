@@ -7,6 +7,7 @@ module ClprApi
       def initialize(id, config = {})
         @id = id
         @listing_serializer_klass = config.fetch(:listing_serializer_klass) { ClprApi.listing_serializer_klass }
+        @serializer_params = config.fetch(:serializer_params) { {} }
       end
 
       def self.call(id, config = {})
@@ -25,7 +26,7 @@ module ClprApi
       end
 
       def item
-        @item ||= listing_serializer_klass.new(response)
+        @item ||= listing_serializer_klass.new(response).with_params_for_serialization(serializer_params)
       end
 
       def response
@@ -48,7 +49,7 @@ module ClprApi
         ["{!tag=active}( ( expires_on_d: { #{current_date_formatted} TO * } ) )"]
       end
 
-      attr_reader :id, :listing_serializer_klass
+      attr_reader :id, :listing_serializer_klass, :serializer_params
     end
   end
 end

@@ -35,9 +35,9 @@ module ClprApi
       end
 
       def api_response
-        @api_response ||= ClprApi.cache.fetch("API-KEY-CONFIGURATION-FOR-#{api_key}", expires_in: 1.hour) do
-          HTTParty.get("#{api_url}/api_keys/#{api_key}").parsed_response
-        end
+        @api_response ||= JSON.parse(ClprApi.cache.fetch("API-KEY-CONFIGURATION-FOR-#{api_key}", expires_in: 1.hour) do
+          HTTParty.get("#{api_url}/api_keys/#{api_key}").parsed_response.to_json
+        end)
       end
 
       module Filters

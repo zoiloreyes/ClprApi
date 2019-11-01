@@ -30,10 +30,22 @@ module ClprApi
         base.extend ClassMethods
       end
 
+      attr_reader :serializer_params
+
+      def with_params_for_serialization(params)
+        @serializer_params = params
+
+        self
+      end
+
       def as_json(*)
         self.class.serializable_attributes.reduce({}) do |hash, attribute|
           value = if self.class.serializable_attributes_procs[attribute]
-                    self.class.serializable_attributes_procs[attribute].call(self)
+                    if self.class.serializable_attributes_procs[attribute].arity.positive?
+                      self.class.serializable_attributes_procs[attribute].call(self, serializer_params)
+                    else
+                      self.class.serializable_attributes_procs[attribute].call(self)
+                    end
                   else
                     public_send(attribute)
                   end

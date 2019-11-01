@@ -9,18 +9,15 @@ RSpec.describe ClprApi::Listings::FilterBuilderByApiKey do
           "jeep",
         ],
         "car_model" => [
-          "wrangler", "wrangler-unlimited", "wrangler-sport", "wrangler", "wrangler-unlimited", "wrangler-sport", "wrangler-unlimited-sport", "wrangler-sahara", "wrangler-unlimited-sport", "wrangler-rubicon", "wrangler-rubicon", "wrangler-sport-unlimited", "wrangler-sport-unlimited", "wrangler-sport", "rubicon-unlimited", "rubicon-unlimited", "rubicon",
-        ],
-        "offering" => [
-          "sale",
-        ],
-        "category" => [
-          "vehiculos-carros",
+          "wrangler", "wrangler-unlimited", "wrangler-sport", "wrangler", "wrangler-unlimited",
+          "wrangler-sport", "wrangler-unlimited-sport", "wrangler-sahara", "wrangler-unlimited-sport",
+          "wrangler-rubicon", "wrangler-rubicon", "wrangler-sport-unlimited", "wrangler-sport-unlimited",
+          "wrangler-sport", "rubicon-unlimited", "rubicon-unlimited", "rubicon",
         ],
         "has_photos" => true,
       },
       search_conditions: [
-        "lister_id_i:(20635)",
+        "lister_id_i:(22)",
       ],
     }
   end

@@ -3,18 +3,21 @@ module ClprApi
     class GetListings
       include Listings::SerializedFieldsSupport
 
-      attr_reader :params, :search_conditions, :listing_serializer_klass
+      attr_reader :params, :search_conditions, :listing_serializer_klass, :serializer_params
 
       def initialize(params: {}, config: {}, search_conditions: [])
-        api_key = params[:api_key]
+        _params = prepare_params(params)
+
+        api_key = _params[:api_key]
         @listing_serializer_klass = config.fetch(:listing_serializer_klass) { ClprApi.listing_serializer_klass }
+        @serializer_params = config.fetch(:serializer_params) { {} }
 
         if api_key
           conditions_by_api_key = Listings::FilterBuilderByApiKey.call(api_key)
-          @params = params.reverse_merge(conditions_by_api_key[:params])
+          @params = _params.reverse_merge(conditions_by_api_key[:params])
           @search_conditions = search_conditions + conditions_by_api_key[:search_conditions]
         else
-          @params = params
+          @params = _params
           @search_conditions = search_conditions
         end
       end
@@ -35,7 +38,7 @@ module ClprApi
       end
 
       def items
-        @items ||= data.response.fetch("docs").map { |doc| listing_serializer_klass.new(doc) }
+        @items ||= data.response.fetch("docs").map { |doc| listing_serializer_klass.new(doc).with_params_for_serialization(serializer_params) }
       end
 
       def query
@@ -50,6 +53,13 @@ module ClprApi
 
       def data
         @data ||= query.response
+      end
+
+      def prepare_params(_params = {})
+        params = _params.dup.to_h.with_indifferent_access
+        _filters = params.delete(:filters) || {}
+
+        params.merge(_filters).with_indifferent_access
       end
 
       delegate :regular_filters, :stats_filters, :filters, to: :data
