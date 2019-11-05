@@ -27,14 +27,22 @@ module ClprApi
       end
 
       def as_json(*)
-        HashWithIndifferentAccess.new(
+        search_results.as_json
+      end
+
+      def search_results_hash
+        @search_results_hash ||= {
           filters: response.filters,
           total: total,
           total_pages: total_pages,
           current_page: current_page,
           items: items,
           fields: fields,
-        )
+        }
+      end
+
+      def search_results
+        @search_results ||= SearchResults.new(search_results_hash)
       end
 
       def items

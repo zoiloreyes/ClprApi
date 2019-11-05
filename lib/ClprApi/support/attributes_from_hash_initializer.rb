@@ -1,15 +1,21 @@
 module ClprApi
   module Support
-    module AttributesFromHashWithStringKeysInitializer
+    module AttributesFromHashInitializer
+      attr_reader :init_attrs
+
+      delegate :[], :fetch, to: :init_attrs
+
       def initialize(attrs)
-        self.class.initializable_attributes_list.map(&:to_s).each do |attribute|
-          instance_variable_set("@#{attribute}", attrs[attribute])
+        @init_attrs = attrs.with_indifferent_access
+
+        self.class.initializable_attributes_list.each do |attribute|
+          instance_variable_set("@#{attribute}", init_attrs[attribute])
         end
       end
 
       module ClassMethods
         def initializable_attributes_list
-          @initializable_attributes_list = (@initializable_attributes_list || [])
+          @initializable_attributes_list = @initializable_attributes_list || (superclass.respond_to?(:initializable_attributes_list) ? superclass.public_send(:initializable_attributes_list) : [])
         end
 
         def initializable_attributes(*args)

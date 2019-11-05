@@ -15,7 +15,7 @@ module ClprApi
         new(business_slug: business_slug, params: params, config: config, search_conditions: search_conditions)
       end
 
-      def as_json(*)
+      def search_results_hash
         { business: business }.merge(super)
       end
 

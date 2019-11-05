@@ -2,7 +2,7 @@ module ClprApi
   module Support
     class ExtraFieldMetadata
       include JsonAttributesSerializer
-      include AttributesFromHashWithStringKeysInitializer
+      include AttributesFromHashInitializer
 
       attributes :id, :type, :label
       initializable_attributes :id, :type, :label

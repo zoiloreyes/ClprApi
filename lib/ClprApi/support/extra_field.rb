@@ -1,8 +1,8 @@
 module ClprApi
   module Support
     class ExtraField < ExtraFieldMetadata
-      attributes :id, :type, :label, :value
-      initializable_attributes :id, :type, :label, :value
+      attributes :value
+      initializable_attributes :value
     end
   end
 end
