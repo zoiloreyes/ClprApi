@@ -17,7 +17,6 @@ require "ClprApi/support/json_serializable_attributes"
 require "ClprApi/support/attributes_from_hash_initializer"
 require "ClprApi/support/youtube/url_or_hash_values"
 require "ClprApi/support/youtube/url"
-require "ClprApi/support/extra_field_metadata"
 require "ClprApi/support/extra_field"
 
 require "ClprApi/serializers/solr_business_industry_serializer"
@@ -90,6 +89,11 @@ module ClprApi
     def cache
       @cache ||= ActiveSupport::Cache::NullStore.new
     end
+  end
+
+  Solr::Connection.config do |conn|
+    conn.server_read_url = ENV.fetch("SOLR_URL")
+    conn.server_write_url = ENV.fetch("SOLR_URL_WRITE")
   end
 
   Versionable.configure do

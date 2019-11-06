@@ -7,8 +7,13 @@ module ClprApi
       include Singleton
       extend Forwardable
 
-      SERVER_READ_URL = ENV.fetch("SOLR_URL")
-      SERVER_WRITE_URL = ENV.fetch("SOLR_URL_WRITE")
+      class << self
+        attr_accessor :server_read_url, :server_write_url
+
+        def config
+          yield(self)
+        end
+      end
 
       class RecordNotFound < StandardError; end
 
@@ -16,11 +21,11 @@ module ClprApi
       def_delegators :solr_write, :add, :delete_by_id, :delete_by_query
 
       def solr_read
-        @solr_read ||= RSolr.connect faraday_connection, url: SERVER_READ_URL, update_format: :xml, read_timeout: 120, open_timeout: 120
+        @solr_read ||= RSolr.connect faraday_connection, url: self.class.server_read_url, update_format: :xml, read_timeout: 120, open_timeout: 120
       end
 
       def solr_write
-        @solr_write ||= RSolr.connect faraday_connection, url: SERVER_WRITE_URL, update_format: :xml, read_timeout: 120, open_timeout: 120
+        @solr_write ||= RSolr.connect faraday_connection, url: self.class.server_write_url, update_format: :xml, read_timeout: 120, open_timeout: 120
       end
 
       def find_by_id_with_params(id, params = {})
