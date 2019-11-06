@@ -1,6 +1,6 @@
 module ClprApi
   module Serializers
-    class ListingSerializer < OpenStruct
+    class ListingSerializer
       include ClprApi::Support::JsonAttributesSerializer
 
       S3_SOURCE_PATH = ENV.fetch("S3_SOURCE_PATH")
@@ -8,16 +8,20 @@ module ClprApi
 
       delegate :[], :fetch, to: :attrs
 
-      attributes :id, :title, :listing_id, :category_slug, :area_slug, :primary_fields
-
       alias_method :read_attribute_for_serialization, :send
       attr_reader :attrs, :solr_field_names
 
       def initialize(attrs)
         @solr_field_names = attrs.keys
-        @attrs = prepare(field_sanitizer(attrs))
+        @attrs = prepare(field_sanitizer(attrs)).with_indifferent_access
+      end
 
-        super(@attrs)
+      def default_as_json
+        attrs.as_json(except: IGNORED_FIELDS).merge(extra_fields_metadata: extra_fields_metadata).merge(images: images.map(&:as_json))
+      end
+
+      def method_missing(method, *args, &block)
+        attrs[method]
       end
 
       def prepare(attrs)
