@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe ClprApi::Listings::GetListings do
   let(:solr) { ClprApi::Solr::Connection.instance }
   let(:params) { {} }
-  subject { described_class.new(params: params).as_json }
+  subject { described_class.call(params: params).search_results }
 
   before do
     delete_all_from_solr
@@ -82,7 +82,5 @@ RSpec.describe ClprApi::Listings::GetListings do
     expect(listing_image_serialized.medium.url).to be_end_with("/320x240/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
     expect(listing_image_serialized.large.url).to be_end_with("/640x480/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
     expect(listing_image_serialized.full.url).to be_end_with("/1024x768/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
-
-    expect(serialized_listing.as_json.keys).to eq([:id, :title, :listing_id, :category_slug, :area_slug, :primary_fields])
   end
 end

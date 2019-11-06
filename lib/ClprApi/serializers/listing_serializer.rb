@@ -17,7 +17,7 @@ module ClprApi
       end
 
       def default_as_json
-        attrs.as_json(except: IGNORED_FIELDS).merge(extra_fields_metadata: extra_fields_metadata).merge(images: images.map(&:as_json))
+        attrs.as_json(except: IGNORED_FIELDS).merge(extra_fields: extra_fields).merge(images: images.map(&:as_json))
       end
 
       def method_missing(method, *args, &block)
@@ -46,12 +46,6 @@ module ClprApi
         @extra_fields ||= attrs.fetch("extra_fields_metadata", []).map { |field|
           json_field = JSON.parse(field)
           Support::ExtraField.new(json_field.merge("value" => attrs[json_field["id"]]))
-        }
-      end
-
-      def extra_fields_metadata
-        @extra_fields_metadata ||= attrs.fetch("extra_fields_metadata", []).map { |field|
-          Support::ExtraFieldMetadata.new(JSON.parse(field))
         }
       end
 
