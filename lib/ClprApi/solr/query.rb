@@ -27,6 +27,7 @@ module ClprApi
       HIGHLIGHTED_FILTER = ["highlighted_until_d:[NOW TO *]"].freeze
       LISTABLE_TYPES = ["option", "optionlist", "boolean", "range"].freeze
       NUMERIC_TYPES = ["integer", "float", "range"].freeze
+      DEFAULT_CACHE_TIME = 5.minutes
 
       delegate :total, to: :response
 
@@ -35,6 +36,11 @@ module ClprApi
       def initialize(search_conditions: [], params: {})
         @search_conditions = search_conditions
         @params = prepare_params(params)
+      end
+
+      def with_cache_ttl(cache_ttl)
+        @cache_ttl = cache_ttl
+        self
       end
 
       def response
@@ -141,6 +147,18 @@ module ClprApi
         }.compact
       end
 
+      def cache_key
+        @cache_key ||= Digest::MD5.hexdigest([
+          "CLPR-API-SOLR-SEARCH-RESULTS",
+          self.class.name,
+          query_params.to_s,
+        ].join)
+      end
+
+      def cache_ttl
+        @cache_ttl ||= ClprApi.default_cache_ttl
+      end
+
       private
 
       def current_date_formatted
@@ -158,8 +176,18 @@ module ClprApi
         params.merge(_filters).with_indifferent_access
       end
 
-      def query_results
+      def raw_results
         Solr::Connection.instance.get(:select, params: query_params)
+      end
+
+      def cached_results
+        ClprApi.cache.fetch(cache_key, expires_in: cache_ttl) do
+          raw_results
+        end
+      end
+
+      def query_results
+        ClprApi.cache_enabled? ? cached_results : raw_results
       end
 
       def highlighted_filter

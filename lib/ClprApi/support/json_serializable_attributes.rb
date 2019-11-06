@@ -38,7 +38,13 @@ module ClprApi
         self
       end
 
+      def default_as_json
+        {}
+      end
+
       def as_json(*)
+        return default_as_json if self.class.serializable_attributes.empty?
+
         self.class.serializable_attributes.reduce({}) do |hash, attribute|
           value = if self.class.serializable_attributes_procs[attribute]
                     if self.class.serializable_attributes_procs[attribute].arity.positive?

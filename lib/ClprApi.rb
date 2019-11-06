@@ -77,6 +77,11 @@ module ClprApi
   class << self
     attr_writer :cache
     attr_writer :listing_serializer_klass
+    attr_accessor :default_cache_ttl
+
+    def cache_enabled?
+      default_cache_ttl
+    end
 
     def listing_serializer_klass
       Serializers::ListingSerializer

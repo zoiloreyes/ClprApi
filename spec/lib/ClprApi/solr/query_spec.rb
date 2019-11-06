@@ -7,6 +7,32 @@ RSpec.describe ClprApi::Solr::Query do
 
   let(:solr) { ClprApi::Solr::Connection.instance }
 
+  describe "cache_key" do
+    describe "generates cache keys bases on given params" do
+      let(:default_cache_key) { "c941ec42a94369de11ce67562269664c" }
+
+      before do
+        allow(subject).to receive(:current_date_formatted) { "2020-12-12" }
+      end
+
+      context "with empty params" do
+        it { expect(subject.cache_key).to eq(default_cache_key) }
+      end
+
+      context "if invalid not filterable params are provided" do
+        let(:params) { { some: :value, another: :value } }
+
+        it { expect(subject.cache_key).to eq(default_cache_key) }
+      end
+
+      context "with provided values params" do
+        let(:params) { { category: "vehiculos-carros-sedan" } }
+
+        it { expect(subject.cache_key).to eq("94ba8c26a800add94d753eb9869a87e1") }
+      end
+    end
+  end
+
   describe "total_pages" do
     context "default" do
       before do

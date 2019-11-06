@@ -3,7 +3,7 @@ module ClprApi
     class GetListings
       include Listings::SerializedFieldsSupport
 
-      attr_reader :params, :search_conditions, :listing_serializer_klass, :serializer_params
+      attr_reader :params, :search_conditions, :listing_serializer_klass, :serializer_params, :cache_ttl
 
       def initialize(params: {}, config: {}, search_conditions: [])
         _params = prepare_params(params)
@@ -11,6 +11,7 @@ module ClprApi
         api_key = _params[:api_key]
         @listing_serializer_klass = config.fetch(:listing_serializer_klass) { ClprApi.listing_serializer_klass }
         @serializer_params = config.fetch(:serializer_params) { {} }
+        @cache_ttl = config[:cache_ttl]
 
         if api_key
           conditions_by_api_key = Listings::FilterBuilderByApiKey.call(api_key)
@@ -31,14 +32,7 @@ module ClprApi
       end
 
       def search_results_hash
-        @search_results_hash ||= {
-          filters: response.filters,
-          total: total,
-          total_pages: total_pages,
-          current_page: current_page,
-          items: items,
-          fields: fields,
-        }
+        @search_results_hash ||= ClprApi.cache_enabled? ? cached_results : raw_results
       end
 
       def search_results
@@ -50,7 +44,7 @@ module ClprApi
       end
 
       def query
-        @query ||= Solr::Query.new(params: params, search_conditions: search_conditions)
+        @query ||= Solr::Query.new(params: params, search_conditions: search_conditions).with_cache_ttl(cache_ttl)
       end
 
       private
@@ -68,6 +62,25 @@ module ClprApi
         _filters = params.delete(:filters) || {}
 
         params.merge(_filters).with_indifferent_access
+      end
+
+      def cache_key
+        @cache_key ||= "#{self.class.name}-#{query.cache_key}"
+      end
+
+      def cached_results
+        ClprApi.cache.fetch(cache_key) { raw_results }
+      end
+
+      def raw_results
+        {
+          filters: response.filters,
+          total: total,
+          total_pages: total_pages,
+          current_page: current_page,
+          items: items,
+          fields: fields,
+        }
       end
 
       delegate :regular_filters, :stats_filters, :filters, to: :data
