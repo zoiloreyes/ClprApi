@@ -3,6 +3,7 @@ module ClprApi
     module Filters
       class Item
         attr_reader :id, :label, :slug, :count, :level, :selected
+        alias_method :selected?, :selected
 
         def initialize(id:, label:, slug:, count:, level: 0, selected: false)
           @id = id
