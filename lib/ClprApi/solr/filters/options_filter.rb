@@ -8,6 +8,8 @@ module ClprApi
           }
         end
 
+        delegate :each, :map, :select, :to_a, to: :listable_options
+
         def listable_options
           @listable_options ||= filter_options.each_slice(2).map { |(option_id, count)|
             next unless count.positive?
