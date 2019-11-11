@@ -11,6 +11,7 @@ module ClprApi
         end
 
         delegate :selected_parents, :selected_records, to: :options
+        delegate :each, :map, :select, :to_a, to: :listable_options
 
         def fetch(*args)
           properties.fetch(args.first)
