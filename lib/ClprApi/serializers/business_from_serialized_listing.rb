@@ -2,7 +2,7 @@ module ClprApi
   module Serializers
     class BusinessFromSerializedListing
       alias_method :read_attribute_for_serialization, :send
-      attr_reader :id, :name, :license, :phone, :phone_ext, :phone2, :phone2_ext, :address1, :address2, :city, :state, :country, :postal_code, :url, :logo_path, :slug, :business_industry_id, :industry
+      attr_reader :id, :name, :license, :phone, :phone_ext, :phone2, :phone2_ext, :address1, :address2, :city, :state, :country, :postal_code, :url, :logo_path, :slug, :business_industry_id, :industry, :location_string
       attr_reader :attrs
 
       def initialize(attrs)
