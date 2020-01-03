@@ -25,9 +25,11 @@ module ClprApi
         {
           id: record.id,
           label: record.label,
+          label2: record.label2,
           slug: record.slug,
           level: record.level,
           parent_id: record.parent_id,
+          seo_title: record.seo_title,
         }
       end
     end
