@@ -3,15 +3,15 @@ module ClprApi
     module JsonAttributesSerializer
       module ClassMethods
         def serializable_attributes
-          @serializable_attributes = @serializable_attributes || (superclass.include?(JsonAttributesSerializer) ? superclass.serializable_attributes : [])
+          @serializable_attributes ||= @serializable_attributes || (superclass.include?(JsonAttributesSerializer) ? superclass.serializable_attributes.dup : [])
         end
 
         def serializable_attributes_procs
-          @serializable_attributes_procs = @serializable_attributes_procs || (superclass.include?(JsonAttributesSerializer) ? superclass.serializable_attributes_procs : {})
+          @serializable_attributes_procs ||= @serializable_attributes_procs || (superclass.include?(JsonAttributesSerializer) ? superclass.serializable_attributes_procs.dup : {})
         end
 
         def serializable_attributes_aliases
-          @serializable_attributes_aliases = @serializable_attributes_aliases || (superclass.include?(JsonAttributesSerializer) ? superclass.serializable_attributes_aliases : {})
+          @serializable_attributes_aliases ||= @serializable_attributes_aliases || (superclass.include?(JsonAttributesSerializer) ? superclass.serializable_attributes_aliases.dup : {})
         end
 
         def attributes(*args)

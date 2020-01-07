@@ -15,7 +15,7 @@ module ClprApi
 
       module ClassMethods
         def initializable_attributes_list
-          @initializable_attributes_list = @initializable_attributes_list || (superclass.respond_to?(:initializable_attributes_list) ? superclass.public_send(:initializable_attributes_list) : [])
+          @initializable_attributes_list = @initializable_attributes_list || (superclass.respond_to?(:initializable_attributes_list) ? superclass.initializable_attributes_list.dup : [])
         end
 
         def initializable_attributes(*args)
