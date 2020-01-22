@@ -3,6 +3,22 @@ module ClprApi
     class SolrListingSerializer < ActiveModel::Serializer
       attributes :id, :listing_id, :source, :source_id, :title, :description, :category_id, :area_id, :is_free, :is_sale, :sale_price_obo, :is_rent, :rent_price_start, :rent_price_end, :rent_price_obo, :is_barter, :lister_id, :highlighted_at, :highlighted_until, :expires_on, :created_at, :updated_at, :starts_on, :has_photos, :boost, :primary, :primary_fields_sm, :extra_fields_sm, :extra_fields_metadata_sm, :offering, :sale_price_start, :sale_price_end, :sale_price_unit, :rent_price_unit, :sale_price_unit_label, :rent_price_unit_label, :youtube_id, :location_string, :lister_key
 
+      def sale_price_start
+        positive?(object.sale_price_start)
+      end
+
+      def sale_price_end
+        positive?(object.sale_price_end)
+      end
+
+      def rent_price_start
+        positive?(object.rent_price_start)
+      end
+
+      def rent_price_end
+        positive?(object.rent_price_end)
+      end
+
       def title
         object.title.to_s.gsub(/[^[:print:]]/, "")
       end
@@ -28,11 +44,11 @@ module ClprApi
       end
 
       def primary_fields_sm
-        @primary_fields ||= object.fields.primary_fields
+        @primary_fields_sm ||= object.fields.primary_fields
       end
 
       def extra_fields_sm
-        @extra_fields ||= object.fields.field_ids
+        @extra_fields_sm ||= object.fields.field_ids
       end
 
       def extra_fields_metadata_sm
@@ -59,6 +75,12 @@ module ClprApi
 
       def lister_key
         object.lister_key.to_s
+      end
+
+      private
+
+      def positive?(value)
+        value if value&.positive?
       end
     end
   end
