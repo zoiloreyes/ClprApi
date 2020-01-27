@@ -105,6 +105,7 @@ module ClprApi
           "facet.field": facet_fields,
         }.merge(
           "f.category_as_json_sm.facet.limit" => -1,
+          "f.category_as_json_sm.facet.mincount" => 1,
           "f.category_as_json_sm.facet.sort" => "lex",
           "f.category_as_json_sm.facet.missing" => "off",
           "f.area_as_json_sm.facet.limit" => -1,
