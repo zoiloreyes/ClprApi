@@ -22,6 +22,12 @@ module ClprApi
 
         private
 
+        def selected_ids
+          super.map do |value|
+            value.is_a?(Query::VirtualFields::VirtualOption) ? value.id : value
+          end
+        end
+
         def find_option(option_id)
           field.options.find { |option| option.id.to_s == option_id }
         end
