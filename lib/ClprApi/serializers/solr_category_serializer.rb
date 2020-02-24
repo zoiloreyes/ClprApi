@@ -1,7 +1,7 @@
 module ClprApi
   module Serializers
     class SolrCategorySerializer < ActiveModel::Serializer
-      attributes :label, :slug, :id_im, :slug_sm, :label_sm, :as_json_sm
+      attributes :label, :slug, :singular_label, :id_im, :slug_sm, :label_sm, :as_json_sm
 
       def id_im
         @id_im ||= object.with_parents_attribute(:id)
@@ -26,6 +26,7 @@ module ClprApi
           id: record.id,
           label: record.label,
           label2: record.label2,
+          singular_label: record.singular_label,
           slug: record.slug,
           level: record.level,
           parent_id: record.parent_id,
