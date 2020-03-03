@@ -16,18 +16,18 @@ module ClprApi
       end
 
       def versions
-        @versions ||= Support::ThumborImage.new(self, :image) { |has|
-          has.version :full, width: 1024, height: 768, fit_in: true
-          has.version :full_cropped, width: 1024, height: 768
-          has.version :large, width: 640, height: 480, fit_in: true
-          has.version :large_cropped, width: 640, height: 480
-          has.version :medium, width: 320, height: 240
-          has.version :small, width: 160, height: 120
-        }.image
+        @versions ||= GfrImageTransformer::Variations.for(image) do
+          variant(:full) { resize(1024, 768, resizer_mode: :fill) }
+          variant(:full_cropped) { resize(1024, 768) }
+          variant(:large) { resize(640, 480, resizer_mode: :fill) }
+          variant(:large_cropped) { resize(640, 480) }
+          variant(:medium) { resize(320, 240) }
+          variant(:small) { resize(160, 120) }
+        end
       end
 
       def serialize_version(key)
-        version = versions.public_send(key)
+        version = versions.fetch(key)
 
         SolrPhotoSerializer.new(image, version)
       end
