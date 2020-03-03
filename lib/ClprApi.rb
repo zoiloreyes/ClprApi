@@ -4,13 +4,10 @@ require "active_model_serializers"
 require "addressable"
 require "rsolr"
 require "faraday"
-require "versionable"
-require "versionable/version"
 require "ClprApi/utils/records_tree_builder"
 require "ClprApi/utils/group_hash_by_prop"
 require "ClprApi/solr/connection"
 require "ClprApi/solr/field_support"
-require "ClprApi/support/thumbor_image"
 
 require "ClprApi/support/youtube/url_or_hash_validation"
 require "ClprApi/support/json_serializable_attributes"
@@ -94,10 +91,5 @@ module ClprApi
   Solr::Connection.config do |conn|
     conn.server_read_url = ENV.fetch("SOLR_URL")
     conn.server_write_url = ENV.fetch("SOLR_URL_WRITE")
-  end
-
-  Versionable.configure do
-    thumbor_server ENV.fetch("THUMBOR_SERVER")
-    secret_key ENV.fetch("SECRET_KEY")
   end
 end
