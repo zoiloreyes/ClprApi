@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/ApexTech/GfrImageResizer
+  remote: https://github.com/ApexTech/GfrImageTransformer
   revision: 6d922fda963a564ee491f7c4a912d9cf222c6283
   specs:
     gfr_image_transformer (0.1.0)
@@ -14,7 +14,6 @@ PATH
       addressable
       faraday
       rsolr
-      thumbor-versionable (~> 0.2.3)
 
 GEM
   remote: https://rubygems.org/
@@ -84,7 +83,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.10)
     public_suffix (4.0.3)
-    rake (10.5.0)
+    rake (13.0.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
@@ -107,7 +106,6 @@ GEM
     shellany (0.0.1)
     thor (0.20.3)
     thread_safe (0.3.6)
-    thumbor-versionable (0.2.7)
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
     zeitwerk (2.2.2)
@@ -124,7 +122,7 @@ DEPENDENCIES
   guard-rspec
   httparty
   pry-byebug
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec (~> 3.0)
 
 BUNDLED WITH
