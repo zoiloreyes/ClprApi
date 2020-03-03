@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/ApexTech/GfrImageResizer
+  remote: https://github.com/ApexTech/GfrImageTransformer
   revision: 6d922fda963a564ee491f7c4a912d9cf222c6283
   specs:
     gfr_image_transformer (0.1.0)
@@ -14,7 +14,6 @@ PATH
       addressable
       faraday
       rsolr
-      thumbor-versionable (~> 0.2.3)
 
 GEM
   remote: https://rubygems.org/
@@ -56,7 +55,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    httparty (0.17.1)
+    httparty (0.18.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
     i18n (1.8.2)
@@ -67,7 +66,7 @@ GEM
       rb-inotify (~> 0.9, >= 0.9.10)
     lumberjack (1.0.13)
     method_source (0.9.2)
-    mime-types (3.3)
+    mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.1009)
     minitest (5.14.0)
@@ -107,7 +106,6 @@ GEM
     shellany (0.0.1)
     thor (0.20.3)
     thread_safe (0.3.6)
-    thumbor-versionable (0.2.7)
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
     zeitwerk (2.2.2)
