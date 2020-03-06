@@ -19,9 +19,9 @@ module ClprApi
 
       def versions
         @versions ||= GfrImageTransformer::Variations.for(image) do
-          variant(:large) { resize(480, 480) }
-          variant(:medium) { resize(320, 320) }
-          variant(:small) { resize(240, 240) }
+          variant(:large) { resize(480, 480, resizer_mode: :inside) }
+          variant(:medium) { resize(320, 320, resizer_mode: :inside) }
+          variant(:small) { resize(240, 240, resizer_mode: :inside) }
           variant(:thumbnail) { resize(320, 240, resizer_mode: :fill) }
         end
       end
