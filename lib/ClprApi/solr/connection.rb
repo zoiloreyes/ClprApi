@@ -70,6 +70,7 @@ module ClprApi
       def faraday_connection
         @faraday_connection ||= Faraday.new(faraday_options) do |faraday|
           faraday.response :logger if ENV["DEBUG_SOLR_RESPONSE"].present?
+          faraday.basic_auth(ENV["SOLR_USER"], ENV["SOLR_PASSWORD"]) if ENV["SOLR_USER"].present?
           faraday.adapter Faraday.default_adapter
         end
       end
