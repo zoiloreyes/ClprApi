@@ -90,9 +90,9 @@ module ClprApi
 
       def current_page
         @current_page ||= begin
-          calc = limit_records_to_zero? ? 0 : (start / limit.to_f).ceil + 1
-          (0..1).include?(calc) ? 1 : calc
-        end
+            calc = limit_records_to_zero? ? 0 : (start / limit.to_f).ceil + 1
+            (0..1).include?(calc) ? 1 : calc
+          end
       end
 
       def facets
@@ -101,6 +101,7 @@ module ClprApi
         {
           fl: "*,score",
           facet: true,
+          "facet.mincount": 1,
           "facet.method": :fc,
           "facet.field": facet_fields,
         }.merge(
@@ -113,7 +114,21 @@ module ClprApi
           "f.area_as_json_sm.facet.sort" => "lex",
           "f.area_as_json_sm.facet.missing" => "off",
           "f.area_as_json_sm.facet.offset" => 0,
-        )
+        ).merge(facet_fields_attributes)
+      end
+
+      def facet_fields_attributes
+        filterable_fields.select { |field| ["integer", "range"].include?(field.value) }.reduce({}) do |hash, field|
+          solr_field = "#{field.field_id}#{solr_field_suffix_for(field)}"
+
+          hash.merge(
+            "f.#{solr_field}.facet.limit" => -1,
+            "f.#{solr_field}.facet.mincount " => 1,
+            "f.#{solr_field}.facet.offset" => 0,
+            "f.#{solr_field}.facet.sort" => "count",
+            "f.#{solr_field}.facet.missing" => "off",
+          )
+        end
       end
 
       def stats
