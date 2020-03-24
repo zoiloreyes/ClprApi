@@ -9,7 +9,7 @@ RSpec.describe ClprApi::Solr::Query do
 
   describe "cache_key" do
     describe "generates cache keys bases on given params" do
-      let(:default_cache_key) { "c941ec42a94369de11ce67562269664c" }
+      let(:default_cache_key) { "e18966f4f787a89da26528bba6a60485" }
 
       before do
         allow(subject).to receive(:current_date_formatted) { "2020-12-12" }
@@ -28,7 +28,7 @@ RSpec.describe ClprApi::Solr::Query do
       context "with provided values params" do
         let(:params) { { category: "vehiculos-carros-sedan" } }
 
-        it { expect(subject.cache_key).to eq("94ba8c26a800add94d753eb9869a87e1") }
+        it { expect(subject.cache_key).to eq("753e6a7c59d5eaea6993f7247fe0ec6b") }
       end
     end
   end
@@ -90,7 +90,6 @@ RSpec.describe ClprApi::Solr::Query do
           "{!ex=car_engine key=car_engine}car_engine_json_s",
           "{!ex=car_make key=car_make}car_make_json_s",
           "{!ex=car_model key=car_model}car_model_s",
-          "{!ex=car_vin key=car_vin}car_vin_s",
           "{!ex=car_year key=car_year}car_year_i",
           "{!ex=new_or_used key=new_or_used}new_or_used_json_s",
         ])
