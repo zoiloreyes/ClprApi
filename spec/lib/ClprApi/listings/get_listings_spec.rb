@@ -78,9 +78,9 @@ RSpec.describe ClprApi::Listings::GetListings do
     expect(serialized_listing.id).to eq("1200601s")
     expect(serialized_listing.highlighted).to be_falsey
 
-    expect(listing_image_serialized.small.url).to be_end_with("/160x120/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
-    expect(listing_image_serialized.medium.url).to be_end_with("/320x240/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
-    expect(listing_image_serialized.large.url).to be_end_with("/640x480/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
-    expect(listing_image_serialized.full.url).to be_end_with("/1024x768/https://s3.amazonaws.com/media.listamax.com/path/to/car-photo-spec.jpg")
+    expect(listing_image_serialized.small.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTYwLCJoZWlnaHQiOjEyMCwiZml0IjoiY292ZXIifX19")
+    expect(listing_image_serialized.medium.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzIwLCJoZWlnaHQiOjI0MCwiZml0IjoiY292ZXIifX19")
+    expect(listing_image_serialized.large.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NjQwLCJoZWlnaHQiOjQ4MCwiZml0IjoiaW5zaWRlIn19fQ==")
+    expect(listing_image_serialized.full.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTAyNCwiaGVpZ2h0Ijo3NjgsImZpdCI6Imluc2lkZSJ9fX0=")
   end
 end
