@@ -4,8 +4,8 @@ RSpec.describe ClprApi::Solr::Connection do
   let(:instance) { described_class.instance }
 
   describe "server_url" do
-    it { expect(instance.class::SERVER_READ_URL).to eq ENV.fetch("SOLR_URL") }
-    it { expect(instance.class::SERVER_WRITE_URL).to eq ENV.fetch("SOLR_URL_WRITE") }
+    it { expect(instance.class.server_read_url).to eq ENV.fetch("SOLR_URL") }
+    it { expect(instance.class.server_write_url).to eq ENV.fetch("SOLR_URL_WRITE") }
   end
 
   before(:each) do
