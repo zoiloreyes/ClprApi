@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe ClprApi::Serializers::SolrListingSerializer, focus: true do
+RSpec.describe ClprApi::Serializers::SolrListingSerializer do
   subject { described_class.new(listing) }
 
   describe "listing prices" do
