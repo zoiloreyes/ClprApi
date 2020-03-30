@@ -14,7 +14,7 @@ module ClprApi
 
         def ungruoped_options
           @ungruoped_options ||= filter_options.each_slice(2).map { |(option_id, count)|
-            next unless count > 0
+            next unless count.positive?
 
             slug = option_id.parameterize
 
@@ -27,11 +27,11 @@ module ClprApi
         end
 
         def as_json(*)
-          properties.merge({
+          properties.merge(
             type: "optionlist",
             label: field.label,
             field: field.field_id,
-          })
+          )
         end
       end
     end

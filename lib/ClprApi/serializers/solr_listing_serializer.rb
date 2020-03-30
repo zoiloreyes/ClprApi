@@ -53,8 +53,8 @@ module ClprApi
 
       def extra_fields_metadata_sm
         @extra_fields_metadata_sm ||= begin
-          object.fields.map { |field| SolrExtraFieldsMetadataSerializer.call(field).to_json }
-        end
+            object.fields.map { |field| SolrExtraFieldsMetadataSerializer.from_field(field).to_json }
+          end
       end
 
       def offering
