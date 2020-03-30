@@ -4,7 +4,7 @@ module ClprApi
       include ClprApi::Support::JsonAttributesSerializer
 
       S3_SOURCE_PATH = ENV.fetch("S3_SOURCE_PATH")
-      IGNORED_FIELDS = ["photos_url_large", "photos_url_tiny", "photos_url_medium", "photos_url_small", "photos_id", "photos_url", "photos_url_src", "photos_description"].freeze
+      IGNORED_FIELDS = ["photos_id", "photos_url", "photos_description"].freeze
 
       delegate :[], :fetch, to: :attrs
 
