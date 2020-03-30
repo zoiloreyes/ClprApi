@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe ClprApi::Serializers::SolrListingPhotoSerializer, focus: true do
+RSpec.describe ClprApi::Serializers::SolrListingPhotoSerializer do
   let(:listing) {
     OpenStruct.new(s3_listing_photos: [
                      OpenStruct.new(s3: "path/to/image-1.png", id: 1, description: "image-1"),
