@@ -4,7 +4,7 @@ module ClprApi
       include Support::JsonAttributesSerializer
       include Support::AttributesFromHashInitializer
 
-      attributes :id, :label, :type, :value
+      attributes :id, :label, :type
       initializable_attributes :id, :label, :type
 
       def self.from_field(field)
