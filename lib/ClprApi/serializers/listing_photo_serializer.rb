@@ -17,12 +17,12 @@ module ClprApi
 
       def versions
         @versions ||= GfrImageTransformer::Variations.for(image) do
-          variant(:full) { resize(1024, 768, resizer_mode: :inside).jpeg }
-          variant(:full_cropped) { resize(1024, 768).jpeg }
-          variant(:large) { resize(640, 480, resizer_mode: :inside).jpeg }
-          variant(:large_cropped) { resize(640, 480).jpeg }
-          variant(:medium) { resize(320, 240).jpeg }
-          variant(:small) { resize(160, 120).jpeg }
+          variant(:full) { resize(1024, 768, resizer_mode: :inside).with_background(:white).jpeg }
+          variant(:full_cropped) { resize(1024, 768).with_background(:white).jpeg }
+          variant(:large) { resize(640, 480, resizer_mode: :inside).with_background(:white).jpeg }
+          variant(:large_cropped) { resize(640, 480).with_background(:white).jpeg }
+          variant(:medium) { resize(320, 240).with_background(:white).jpeg }
+          variant(:small) { resize(160, 120).with_background(:white).jpeg }
         end
       end
 
