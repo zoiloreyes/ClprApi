@@ -17,7 +17,7 @@ module ClprApi
       end
 
       def default_as_json
-        attrs.as_json(except: IGNORED_FIELDS).merge(extra_fields: extra_fields).merge(images: images.map(&:as_json))
+        attrs.as_json(except: IGNORED_FIELDS).merge(extra_fields: extra_fields).merge(image: image, images: images.map(&:as_json))
       end
 
       def method_missing(method, *args, &block)
@@ -47,6 +47,14 @@ module ClprApi
           json_field = JSON.parse(field)
           Support::ExtraField.new(json_field.merge("value" => attrs[json_field["id"]]))
         }
+      end
+
+      def main_image_url
+        attrs["photos_main_url"].to_s
+      end
+
+      def image
+        Serializers::ListingPhotoSerializer.new("#{S3_SOURCE_PATH}#{main_image_url}") if main_image_url.present?
       end
 
       def images
