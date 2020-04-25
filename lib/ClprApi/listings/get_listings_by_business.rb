@@ -1,6 +1,29 @@
 module ClprApi
   module Listings
     class GetListingsByBusiness < Listings::GetListings
+      BUSINESS_FIELDS = [
+        :id,
+        :business_id_i,
+        :business_name_s,
+        :business_license_s,
+        :business_phone_s,
+        :business_phone_ext_s,
+        :business_phone2_s,
+        :business_phone2_ext_s,
+        :business_address1_s,
+        :business_address2_s,
+        :business_city_s,
+        :business_postal_code_s,
+        :business_url_s,
+        :business_slug_s,
+        :business_country_s,
+        :business_industry_id_i,
+        :business_industry_name_s,
+        :business_industry_description_s,
+        :business_industry_slug_s,
+        :business_industry_category_slug_s,
+      ].join(",").freeze
+
       attr_reader :business_slug, :params, :listing_serializer_klass
 
       def initialize(business_slug:, params: {}, config: {}, search_conditions: [])
@@ -38,7 +61,7 @@ module ClprApi
       private
 
       def listing_from_business
-        @listing_from_business ||= ClprApi::Listings::GetListings.new(search_conditions: [business_filter], params: { limit: 1 }).items.last
+        @listing_from_business ||= ClprApi::Listings::GetListings.new(search_conditions: [business_filter], params: { fields: BUSINESS_FIELDS, limit: 1 }).items.last
       end
 
       def category_param_from_business_industry

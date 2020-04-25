@@ -38,7 +38,6 @@ RSpec.describe ClprApi::Listings::GetListings do
   end
 
   let(:serialized_listing) { subject["items"].first }
-  let(:listing_image_serialized) { serialized_listing.images.first }
 
   it "returns serialized items" do
     expect(subject["filters"].fetch("area").fetch("selected")).to be_empty
@@ -50,37 +49,32 @@ RSpec.describe ClprApi::Listings::GetListings do
     expect(subject["current_page"]).to eq(1)
 
     expect(serialized_listing.listing_id).to eq(1200601)
-    expect(serialized_listing.source).to eq("INV360")
-    expect(serialized_listing.source_id).to eq("")
+    expect(serialized_listing.source).to be_nil
+    expect(serialized_listing.source_id).to be_nil
     expect(serialized_listing.title).to eq("Nissan Versa 2015.")
-    expect(serialized_listing.description).to eq("Nissan Versa 2015 Car Description")
-    expect(serialized_listing.category_id).to eq([1, 3, 9, 13])
+    expect(serialized_listing.description).to be_nil
+    expect(serialized_listing.category_id).to be_nil
     expect(serialized_listing.is_free).to be_falsey
     expect(serialized_listing.is_sale).to be_truthy
     expect(serialized_listing.sale_price_obo).to be_falsey
     expect(serialized_listing.is_rent).to be_falsey
     expect(serialized_listing.rent_price_obo).to be_falsey
     expect(serialized_listing.is_barter).to be_falsey
-    expect(serialized_listing.has_photos).to be_truthy
-    expect(serialized_listing.boost).to eq(1)
-    expect(serialized_listing.primary).to be_truthy
+    expect(serialized_listing.photos_count).to eq(4)
     expect(serialized_listing.offering).to eq("sale")
     expect(serialized_listing.sale_price_start).to eq(9000.0)
     expect(serialized_listing.sale_price_unit_label).to eq("")
     expect(serialized_listing.rent_price_unit_label).to eq("")
     expect(serialized_listing.price_start).to eq(9000.0)
     expect(serialized_listing.price_unit).to eq("")
-    expect(serialized_listing.price_conditions).to eq("")
-    expect(serialized_listing.price_obo).to be_falsey
-    expect(serialized_listing.area_type).to eq("country")
     expect(serialized_listing.extra_fields.map(&:id)).to match_array(["car_doors", "car_make", "car_model", "car_vin", "car_year", "new_or_used"])
-    expect(serialized_listing.extra_fields.map(&:value)).to match_array(["3N1CN7APXFL934684", "Versa", 2015, 4, "Nuevo", "Nissan"])
+    expect(serialized_listing.extra_fields.map(&:label)).to match_array(["VIN", "Modelo", "Año", "Puertas", "Nuevo o usado", "Marca"])
     expect(serialized_listing.id).to eq("1200601s")
-    expect(serialized_listing.highlighted).to be_falsey
+    expect(serialized_listing.highlighted).to be_truthy
 
-    expect(listing_image_serialized.small.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTYwLCJoZWlnaHQiOjEyMCwiZml0IjoiY292ZXIifSwiZmxhdHRlbiI6eyJiYWNrZ3JvdW5kIjp7InIiOjI1NSwiZyI6MjU1LCJiIjoyNTUsImFscGhhIjoxfX0sImpwZWciOnsicXVhbGl0eSI6OTB9LCJ0b0Zvcm1hdCI6ImpwZWcifX0=")
-    expect(listing_image_serialized.medium.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzIwLCJoZWlnaHQiOjI0MCwiZml0IjoiY292ZXIifSwiZmxhdHRlbiI6eyJiYWNrZ3JvdW5kIjp7InIiOjI1NSwiZyI6MjU1LCJiIjoyNTUsImFscGhhIjoxfX0sImpwZWciOnsicXVhbGl0eSI6OTB9LCJ0b0Zvcm1hdCI6ImpwZWcifX0=")
-    expect(listing_image_serialized.large.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NjQwLCJoZWlnaHQiOjQ4MCwiZml0IjoiaW5zaWRlIn0sImZsYXR0ZW4iOnsiYmFja2dyb3VuZCI6eyJyIjoyNTUsImciOjI1NSwiYiI6MjU1LCJhbHBoYSI6MX19LCJqcGVnIjp7InF1YWxpdHkiOjkwfSwidG9Gb3JtYXQiOiJqcGVnIn19")
-    expect(listing_image_serialized.full.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTAyNCwiaGVpZ2h0Ijo3NjgsImZpdCI6Imluc2lkZSJ9LCJmbGF0dGVuIjp7ImJhY2tncm91bmQiOnsiciI6MjU1LCJnIjoyNTUsImIiOjI1NSwiYWxwaGEiOjF9fSwianBlZyI6eyJxdWFsaXR5Ijo5MH0sInRvRm9ybWF0IjoianBlZyJ9fQ==")
+    expect(serialized_listing.image.small.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTYwLCJoZWlnaHQiOjEyMCwiZml0IjoiY292ZXIifSwiZmxhdHRlbiI6eyJiYWNrZ3JvdW5kIjp7InIiOjI1NSwiZyI6MjU1LCJiIjoyNTUsImFscGhhIjoxfX0sImpwZWciOnsicXVhbGl0eSI6OTB9LCJ0b0Zvcm1hdCI6ImpwZWcifX0=")
+    expect(serialized_listing.image.medium.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzIwLCJoZWlnaHQiOjI0MCwiZml0IjoiY292ZXIifSwiZmxhdHRlbiI6eyJiYWNrZ3JvdW5kIjp7InIiOjI1NSwiZyI6MjU1LCJiIjoyNTUsImFscGhhIjoxfX0sImpwZWciOnsicXVhbGl0eSI6OTB9LCJ0b0Zvcm1hdCI6ImpwZWcifX0=")
+    expect(serialized_listing.image.large.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6NjQwLCJoZWlnaHQiOjQ4MCwiZml0IjoiaW5zaWRlIn0sImZsYXR0ZW4iOnsiYmFja2dyb3VuZCI6eyJyIjoyNTUsImciOjI1NSwiYiI6MjU1LCJhbHBoYSI6MX19LCJqcGVnIjp7InF1YWxpdHkiOjkwfSwidG9Gb3JtYXQiOiJqcGVnIn19")
+    expect(serialized_listing.image.full.url).to be_end_with("eyJidWNrZXQiOiJtZWRpYS5saXN0YW1heC5jb20iLCJrZXkiOiJwYXRoL3RvL2Nhci1waG90by1zcGVjLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTAyNCwiaGVpZ2h0Ijo3NjgsImZpdCI6Imluc2lkZSJ9LCJmbGF0dGVuIjp7ImJhY2tncm91bmQiOnsiciI6MjU1LCJnIjoyNTUsImIiOjI1NSwiYWxwaGEiOjF9fSwianBlZyI6eyJxdWFsaXR5Ijo5MH0sInRvRm9ybWF0IjoianBlZyJ9fQ==")
   end
 end

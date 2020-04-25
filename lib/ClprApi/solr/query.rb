@@ -31,11 +31,15 @@ module ClprApi
 
       delegate :total, to: :response
 
-      attr_reader :params, :search_conditions
+      attr_reader :params, :search_conditions, :selected_fields
 
       def initialize(search_conditions: [], params: {})
         @search_conditions = search_conditions
         @params = prepare_params(params)
+        @selected_fields = [
+          @params.delete(:fields) || DEFAULT_FIELDS,
+          @params.delete(:extra_fields),
+        ].compact.flatten.join(",")
       end
 
       def with_cache_ttl(cache_ttl)
@@ -95,11 +99,44 @@ module ClprApi
           end
       end
 
+      DEFAULT_FIELDS = [
+        :score,
+        :photos_main_url_s,
+        :photos_count_i,
+        :title_s,
+        :id,
+        :lister_id_i,
+        :listing_id_i,
+        :offering_s,
+        :area_city_s,
+        :area_country_s,
+        :price_start_f,
+        :price_end_f,
+        :sale_price_start_f,
+        :rent_price_start_f,
+        :sale_price_unit_label_s,
+        :rent_price_unit_label_s,
+        :is_sale_b,
+        :is_rent_b,
+        :price_unit_s,
+        :category_config_show_category_tree_b,
+        :category_config_show_only_category_b,
+        :category_config_show_price_b,
+        :extra_fields_metadata_sm,
+        :category_slug_s,
+        :category_slug_sm,
+        :category_label_s,
+        :category_label_sm,
+        :area_slug_s,
+        :area_slug_sm,
+        :highlighted_until_d,
+      ].map(&:to_s).join(",")
+
       def facets
         return {} unless facet_fields.present?
 
         {
-          fl: "*,score",
+          fl: selected_fields,
           facet: true,
           "facet.mincount": 1,
           "facet.method": :fc,
