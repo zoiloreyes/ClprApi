@@ -9,7 +9,7 @@ RSpec.describe ClprApi::Solr::Query do
 
   describe "cache_key" do
     describe "generates cache keys bases on given params" do
-      let(:default_cache_key) { "e18966f4f787a89da26528bba6a60485" }
+      let(:default_cache_key) { "7abc7e8099080a9d300ba0b2a48bbe8e" }
 
       before do
         allow(subject).to receive(:current_date_formatted) { "2020-12-12" }
@@ -28,7 +28,7 @@ RSpec.describe ClprApi::Solr::Query do
       context "with provided values params" do
         let(:params) { { category: "vehiculos-carros-sedan" } }
 
-        it { expect(subject.cache_key).to eq("753e6a7c59d5eaea6993f7247fe0ec6b") }
+        it { expect(subject.cache_key).to eq("20afb13f769ebce3d05481f0cb620a9c") }
       end
     end
   end
