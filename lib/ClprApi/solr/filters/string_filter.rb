@@ -2,6 +2,8 @@ module ClprApi
   module Solr
     module Filters
       class StringFilter < Base
+        delegate :each, :map, :select, :to_a, to: :listable_options
+
         def properties
           @properties ||= {
             items: listable_options,
