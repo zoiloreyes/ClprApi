@@ -78,13 +78,17 @@
   "car_make_json": "{\"field_id\":\"car_make\",\"slug\":\"nissan\",\"label\":\"Nissan\",\"value\":8310}",
   "area_as_json": ["{\"id\":89,\"label\":\"Puerto Rico\",\"slug\":\"puerto-rico\",\"level\":1,\"parent_id\":96}"],
   "area_slug": ["puerto-rico"],
+  "car_engine_i": 8004,
+  "car_engine_s": "4 Cilindros",
+  "car_engine_slug_s": "4-cilindros",
   "extra_fields": [
-    "{\"id\":\"car_vin\",\"label\":\"VIN\",\"type\":\"booelan\"}",
+    "{\"id\":\"car_vin\",\"label\":\"VIN\",\"type\":\"string\"}",
     "{\"id\":\"car_model\",\"label\":\"Modelo\",\"type\":\"string\"}",
     "{\"id\":\"car_year\",\"label\":\"Año\",\"type\":\"integer\"}",
     "{\"id\":\"car_doors\",\"label\":\"Puertas\",\"type\":\"range\"}",
     "{\"id\":\"new_or_used\",\"label\":\"Nuevo o usado\",\"type\":\"option\"}",
-    "{\"id\":\"car_make\",\"label\":\"Marca\",\"type\":\"option\"}"
+    "{\"id\":\"car_make\",\"label\":\"Marca\",\"type\":\"option\"}",
+    "{\"id\":\"car_engine\",\"slug\":\"4-cilindros\",\"label\":\"4 Cilindros\",\"value\":8004}"
   ],
   "primary_fields": ["car_model", "car_year", "car_make"],
   "category_as_json": [
