@@ -4,8 +4,8 @@ module ClprApi
       include JsonAttributesSerializer
       include AttributesFromHashInitializer
 
-      attributes :id, :type, :label, :value
-      initializable_attributes :id, :type, :label, :value
+      attributes :id, :label, :type, :primary, :value, :slug
+      initializable_attributes :id, :label, :type, :primary, :value, :slug
     end
   end
 end
