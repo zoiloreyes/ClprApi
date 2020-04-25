@@ -18,13 +18,35 @@
   "created_at_d": "2018-03-24T10:51:18Z",
   "updated_at_d": "2019-03-22T12:51:40Z",
   "starts_on_d": "2018-03-24T10:51:18Z",
+  "highlighted_at_d": "2018-03-24T10:51:18Z",
+  "highlighted_until_d": "2038-03-24T10:51:18Z",
   "has_photos_b": true,
-  "photos_id_im": [14216286, 14216287, 15522358, 15522359],
-  "photos_description_sm": ["", "", "", ""],
-  "photos_url_sm": ["path/to/car-photo-spec.jpg"],
-  "photos_url_large_sm": ["path/to/car-photo-spec.jpg"],
-  "photos_url_tiny_sm": ["path/to/car-photo-spec.jpg"],
-  "photos_url_medium_sm": ["path/to/car-photo-spec.jpg"],
+  "photos_main_url_s": "path/to/car-photo-spec.jpg",
+  "photos_count_i": 4,
+  "photos_id_im": [
+    14216286,
+    14216287,
+    15522358,
+    15522359
+  ],
+  "photos_description_sm": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "photos_url_sm": [
+    "path/to/car-photo-spec.jpg"
+  ],
+  "photos_url_large_sm": [
+    "path/to/car-photo-spec.jpg"
+  ],
+  "photos_url_tiny_sm": [
+    "path/to/car-photo-spec.jpg"
+  ],
+  "photos_url_medium_sm": [
+    "path/to/car-photo-spec.jpg"
+  ],
   "boost_i": 1,
   "sale_price_start_f": 9000.0,
   "sale_price_end_f": 9000.0,
@@ -73,8 +95,12 @@
   "car_make_s": "Nissan",
   "car_make_slug_s": "nissan",
   "car_make_json_s": "{\"field_id\":\"car_make\",\"slug\":\"nissan\",\"label\":\"Nissan\",\"value\":8310}",
-  "area_as_json_sm": ["{\"id\":89,\"label\":\"Puerto Rico\",\"slug\":\"puerto-rico\",\"level\":1,\"parent_id\":96}"],
-  "area_slug_sm": ["puerto-rico"],
+  "area_as_json_sm": [
+    "{\"id\":89,\"label\":\"Puerto Rico\",\"slug\":\"puerto-rico\",\"level\":1,\"parent_id\":96}"
+  ],
+  "area_slug_sm": [
+    "puerto-rico"
+  ],
   "extra_fields_metadata_sm": [
     "{\"id\":\"car_vin\",\"label\":\"VIN\",\"type\":\"booelan\"}",
     "{\"id\":\"car_model\",\"label\":\"Modelo\",\"type\":\"string\"}",
@@ -83,16 +109,44 @@
     "{\"id\":\"new_or_used\",\"label\":\"Nuevo o usado\",\"type\":\"option\"}",
     "{\"id\":\"car_make\",\"label\":\"Marca\",\"type\":\"option\"}"
   ],
-  "primary_fields_sm": ["car_model", "car_year", "car_make"],
+  "primary_fields_sm": [
+    "car_model",
+    "car_year",
+    "car_make"
+  ],
   "category_as_json_sm": [
     "{\"id\":1,\"label\":\"Todos\",\"slug\":\"todos\",\"level\":0,\"parent_id\":null}",
     "{\"id\":3,\"label\":\"Vehículos\",\"slug\":\"vehiculos\",\"level\":1,\"parent_id\":1}",
     "{\"id\":9,\"label\":\"Carros\",\"slug\":\"vehiculos-carros\",\"level\":2,\"parent_id\":3}",
     "{\"id\":13,\"label\":\"Sedán\",\"slug\":\"vehiculos-carros-sedan\",\"level\":3,\"parent_id\":9}"
   ],
-  "category_id_im": [1, 3, 9, 13],
-  "category_slug_sm": ["todos", "vehiculos", "vehiculos-carros", "vehiculos-carros-sedan"],
-  "extra_fields_sm": ["car_vin", "car_model", "car_year", "car_doors", "new_or_used", "car_make"],
-  "category_label_sm": ["Todos", "Vehículos", "Carros", "Sedán"],
-  "area_id_im": [89]
+  "category_id_im": [
+    1,
+    3,
+    9,
+    13
+  ],
+  "category_slug_sm": [
+    "todos",
+    "vehiculos",
+    "vehiculos-carros",
+    "vehiculos-carros-sedan"
+  ],
+  "extra_fields_sm": [
+    "car_vin",
+    "car_model",
+    "car_year",
+    "car_doors",
+    "new_or_used",
+    "car_make"
+  ],
+  "category_label_sm": [
+    "Todos",
+    "Vehículos",
+    "Carros",
+    "Sedán"
+  ],
+  "area_id_im": [
+    89
+  ]
 }
