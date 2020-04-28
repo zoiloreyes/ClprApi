@@ -11,7 +11,7 @@ module ClprApi
         api_key = _params[:api_key]
         @listing_serializer_klass = config.fetch(:listing_serializer_klass) { ClprApi.listing_serializer_klass }
         @serializer_params = config.fetch(:serializer_params) { {} }
-        @cache_ttl = config[:cache_ttl]
+        @cache_ttl = config.fetch(:cache_ttl, ClprApi.default_cache_ttl)
 
         if api_key
           conditions_by_api_key = Listings::FilterBuilderByApiKey.call(api_key)
@@ -69,7 +69,7 @@ module ClprApi
       end
 
       def cached_results
-        ClprApi.cache.fetch(cache_key) { raw_results }
+        ClprApi.cache.fetch(cache_key, expires_in: cache_ttl) { raw_results }
       end
 
       def raw_results
