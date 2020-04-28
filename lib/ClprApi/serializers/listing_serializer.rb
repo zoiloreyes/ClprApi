@@ -44,8 +44,7 @@ module ClprApi
 
       def extra_fields
         @extra_fields ||= attrs.fetch("extra_fields_metadata", []).map { |field|
-          json_field = JSON.parse(field)
-          Support::ExtraField.new(json_field.merge("value" => attrs[json_field["id"]]))
+          Support::ExtraField.new(JSON.parse(field))
         }
       end
 
