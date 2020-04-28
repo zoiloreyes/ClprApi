@@ -21,7 +21,7 @@ module ClprApi
           variant(:full_cropped) { resize(1024, 768).with_background(:white).jpeg }
           variant(:large) { resize(640, 480, resizer_mode: :inside).with_background(:white).jpeg }
           variant(:large_cropped) { resize(640, 480).with_background(:white).jpeg }
-          variant(:medium) { resize(320, 240).with_background(:white).jpeg }
+          variant(:medium) { resize(320, 240, resizer_mode: :contain, fill_color: :white).with_background(:white).jpeg }
           variant(:small) { resize(160, 120).with_background(:white).jpeg }
         end
       end
