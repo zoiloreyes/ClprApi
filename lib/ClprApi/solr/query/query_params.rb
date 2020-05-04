@@ -47,7 +47,7 @@ module ClprApi
         end
 
         def area_filter
-          "{!tag=area}( ( area_slug_sm: (#{area_param.join(" OR ")}) ) )" if area_param.present?
+          "{!tag=area}( ( secondary_areas_slug_sm: (#{area_param.join(" OR ")}) ) )" if area_param.present?
         end
 
         def sort
