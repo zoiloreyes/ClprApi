@@ -29,6 +29,7 @@ module ClprApi
       def json_data
         @json_data ||= serialized_listing.merge(serialized_offering)
           .merge(preffix_hash_keys_with("area", serialized_area))
+          .merge(preffix_hash_keys_with("secondary_areas", secondary_areas_serializer))
           .merge(preffix_hash_keys_with("lister", serialized_lister))
           .merge(preffix_hash_keys_with("business", serialized_business))
           .merge(preffix_hash_keys_with("business_industry", serialized_business_industry))
@@ -115,6 +116,10 @@ module ClprApi
 
       def serialized_area
         ClprApi::Serializers::SolrAreaSerializer.new(listing.area_record).as_json(root: nil)
+      end
+
+      def secondary_areas_serializer
+        ClprApi::Serializers::SolrSecondaryAreasSerializer.new(listing).as_json(root: nil)
       end
 
       def serialized_lister
