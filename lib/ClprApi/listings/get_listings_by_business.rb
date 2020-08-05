@@ -21,6 +21,8 @@ module ClprApi
         :business_industry_name_s,
         :business_industry_description_s,
         :business_industry_slug_s,
+        :business_whatsapp_phone_s,
+        :business_premium_b,
         :business_industry_category_slug_s,
       ].join(",").freeze
 
