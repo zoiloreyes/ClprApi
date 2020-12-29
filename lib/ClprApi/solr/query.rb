@@ -130,6 +130,7 @@ module ClprApi
         :area_slug_s,
         :area_slug_sm,
         :highlighted_until_d,
+        :youtube_id_s,
       ].map(&:to_s).join(",")
 
       def facets
