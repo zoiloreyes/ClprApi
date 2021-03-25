@@ -25,9 +25,9 @@ module ClprApi
 
           def direction_for(value)
             case value
-            when "a_z", "cheapesness", "relevance", "score"
+            when "a_z", "cheapesness", "relevance", "score", "oldest"
               :asc
-            when "z_a", "expensiveness", "most_recent", "recency", "oldest"
+            when "z_a", "expensiveness", "most_recent", "recency"
               :desc
             when :desc, :asc
               value
