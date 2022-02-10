@@ -1,7 +1,7 @@
 module ClprApi
   module Serializers
     class SolrListingSerializer < ActiveModel::Serializer
-      attributes :id, :listing_id, :source, :source_id, :title, :description, :category_id, :area_id, :is_free, :is_sale, :sale_price_obo, :is_rent, :rent_price_start, :rent_price_end
+      attributes :id, :status, :listing_id, :source, :source_id, :title, :description, :category_id, :area_id, :is_free, :is_sale, :sale_price_obo, :is_rent, :rent_price_start, :rent_price_end
       attributes :rent_price_obo, :is_barter, :lister_id, :highlighted_at, :highlighted_until, :expires_on, :created_at, :updated_at, :starts_on, :has_photos, :photos_count, :boost, :primary
       attributes :primary_fields_sm, :extra_fields_sm, :extra_fields_metadata_sm, :offering, :sale_price_start, :sale_price_end, :sale_price_unit, :rent_price_unit, :sale_price_unit_label
       attributes :rent_price_unit_label, :youtube_id, :location_string, :lister_key
@@ -72,6 +72,10 @@ module ClprApi
 
       def starts_on
         object.starts_on || object.created_at
+      end
+
+      def status
+        object.status || "active"
       end
 
       def lister_key
