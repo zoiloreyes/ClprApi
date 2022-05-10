@@ -74,6 +74,10 @@ module ClprApi
         object.starts_on || object.created_at
       end
 
+      def status
+        object.status || "active"
+      end
+
       def lister_key
         object.lister_key.to_s
       end
